@@ -1,9 +1,8 @@
-const express = require("express");
-
+const express = require('express');
 const app = express();
 
-app.get("/", function(request, response){
-  response.send("<h2>Привет Express!</h2>");
-});
+const api = require('./routes')
+
+app.use('/', api )
 
 app.listen(4200);
