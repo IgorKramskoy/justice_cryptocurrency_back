@@ -15,7 +15,7 @@ mongoClient.connect(function(err, client){
   if(err) return console.log(err);
   dbClient = client;
   app.locals.collection = client.db("users").collection("data-user");
-  app.listen(5200, function(){
+  app.listen(4200, function(){
     console.log("Сервер ожидает подключения...");
   });
 });
