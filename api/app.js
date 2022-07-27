@@ -4,7 +4,7 @@ const MongoClient = require("mongodb").MongoClient;
 const cors = require('cors');
 
 const api = require('./routes');
-const mongoClient = new MongoClient("mongodb://root:example@0.0.0.0:27017/");
+const mongoClient = new MongoClient("mongodb://root:example@mongo:27017/");
 let dbClient;
 
 app.use(cors());
