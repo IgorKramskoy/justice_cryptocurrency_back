@@ -1,12 +1,16 @@
 const {UserSchema} = require('../../schemas/user.schema');
+const bcrypt = require('bcrypt');
+
 const action = async (req, res) => {
 
   if(!req.body) return res.sendStatus(400);
 
+  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+
   const user = {
     name: req.body.name,
     email: req.body.email,
-    password: req.body.password,
+    password: hashedPassword,
   };
 
   const candidate =  await UserSchema.findOne({email: req.body.email})

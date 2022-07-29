@@ -1,12 +1,13 @@
 const {UserSchema} = require('../../schemas/user.schema');
+const bcrypt = require('bcrypt');
 const objectId = require("mongodb").ObjectId;
 
 const action = async (req, res) => {
   if (!req.body) return res.sendStatus(400);
-
-  const id = new objectId(req.body._id);
   const {name, email, city, birthday, phone, password, avatar} = req.body;
 
+  const hashedPassword = await bcrypt.hash(password, 10)
+  const id = new objectId(req.body._id);
   const user = await UserSchema.findOneAndUpdate(
     {_id: id},
     {
@@ -16,7 +17,7 @@ const action = async (req, res) => {
         city: city,
         birthday: birthday,
         phone: phone,
-        password: password,
+        password: hashedPassword,
         avatar: avatar,
       }
     },
