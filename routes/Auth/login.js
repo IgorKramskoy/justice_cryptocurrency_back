@@ -1,14 +1,16 @@
+const {UserSchema} = require('../../schemas/user.schema');
+const bcrypt = require('bcrypt');
+
 const action = async (req, res) => {
-  const collection = req.app.locals.collection;
-  await collection.find({}).toArray((err, users) => {
-    if (err) return console.log(err);
-    const authUser = users.find((item) => item.email === req.body.email)
-    if(authUser && authUser.password === req.body.password) {
-      res.send(authUser)
-    } else {
-      res.status(403).send('user already exists')
-    }
-  })
+
+  const candidate =  await UserSchema.findOne({email: req.body.email})
+
+  if (await bcrypt.compare(req.body.password, candidate.password)) {
+    res.send(candidate)
+  } else {
+    res.status(403).send('user already exists')
+  }
+
 
 };
 
